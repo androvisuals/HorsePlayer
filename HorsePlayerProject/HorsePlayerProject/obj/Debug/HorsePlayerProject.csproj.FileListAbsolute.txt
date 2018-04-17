@@ -9,6 +9,7 @@ D:\Version control\gitHub Repos\HorsePlayer\HorsePlayerProject\HorsePlayerProjec
 D:\Version control\gitHub Repos\HorsePlayer\HorsePlayerProject\HorsePlayerProject\obj\Debug\HorsePlayerProject.csproj.CoreCompileInputs.cache
 D:\Version control\gitHub Repos\HorsePlayer\HorsePlayerProject\HorsePlayerProject\obj\Debug\HorsePlayerProject.exe
 D:\Version control\gitHub Repos\HorsePlayer\HorsePlayerProject\HorsePlayerProject\obj\Debug\HorsePlayerProject.pdb
+<<<<<<< HEAD
 C:\git\horseplayer\HorsePlayerProject\HorsePlayerProject\obj\Debug\HorsePlayerProject.Form1.resources
 C:\git\horseplayer\HorsePlayerProject\HorsePlayerProject\obj\Debug\HorsePlayerProject.Properties.Resources.resources
 C:\git\horseplayer\HorsePlayerProject\HorsePlayerProject\obj\Debug\HorsePlayerProject.csproj.GenerateResource.Cache
@@ -20,3 +21,6 @@ C:\git\horseplayer\HorsePlayerProject\HorsePlayerProject\bin\Debug\Bass.Net.dll
 C:\git\horseplayer\HorsePlayerProject\HorsePlayerProject\bin\Debug\Bass.Net.xml
 C:\git\horseplayer\HorsePlayerProject\HorsePlayerProject\obj\Debug\HorsePlayerProject.exe
 C:\git\horseplayer\HorsePlayerProject\HorsePlayerProject\obj\Debug\HorsePlayerProject.pdb
+=======
+D:\Version control\gitHub Repos\HorsePlayer\HorsePlayerProject\HorsePlayerProject\obj\Debug\HorsePlayerProject.csprojResolveAssemblyReference.cache
+>>>>>>> 0d17889a63201b5d7122407f521cb39d137bacd1

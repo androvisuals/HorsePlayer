@@ -20,7 +20,7 @@ namespace HorsePlayerProject
 
         int stream;
         //a sound has 4 song parts, needs a start loop and end loop point
-        //we need 8 streamsfor one sound eg kick 01
+        //we need 8 streams for one sound eg kick 01
         // then we need to interpolate between 8 volumes with one float
 
 
