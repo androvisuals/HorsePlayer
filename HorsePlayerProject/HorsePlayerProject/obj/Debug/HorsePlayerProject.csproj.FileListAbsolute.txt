@@ -9,3 +9,4 @@ D:\Version control\gitHub Repos\HorsePlayer\HorsePlayerProject\HorsePlayerProjec
 D:\Version control\gitHub Repos\HorsePlayer\HorsePlayerProject\HorsePlayerProject\obj\Debug\HorsePlayerProject.csproj.CoreCompileInputs.cache
 D:\Version control\gitHub Repos\HorsePlayer\HorsePlayerProject\HorsePlayerProject\obj\Debug\HorsePlayerProject.exe
 D:\Version control\gitHub Repos\HorsePlayer\HorsePlayerProject\HorsePlayerProject\obj\Debug\HorsePlayerProject.pdb
+D:\Version control\gitHub Repos\HorsePlayer\HorsePlayerProject\HorsePlayerProject\obj\Debug\HorsePlayerProject.csprojResolveAssemblyReference.cache
