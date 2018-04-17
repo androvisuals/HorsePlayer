@@ -13,56 +13,64 @@ namespace HorsePlayerProject
 {
     public partial class Form1 : Form
     {
+        float bpm = 90.0f;
+        Soundboard soundboard;
+        List<Channel> channels;
+
         public Form1()
         {
             InitializeComponent();
+            
         }
-
-        int stream;
-        //a sound has 4 song parts, needs a start loop and end loop point
-        //we need 8 streams for one sound eg kick 01
-        // then we need to interpolate between 8 volumes with one float
-
 
         private void Form1_Load(object sender, EventArgs e)
         {
             // init BASS using the default output device
             if (Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
             {
-                // create a stream channel from a file
-                stream = Bass.BASS_StreamCreateFile("KickLoop-01.wav", 0, 0, BASSFlag.BASS_DEFAULT);
-                if (stream != 0)
-                {
-                    // play the stream channel
-                    Bass.BASS_ChannelPlay(stream, false);
-                }
-                else
-                {
-                    // error creating the stream
-                    Console.WriteLine("Stream error: {0}", Bass.BASS_ErrorGetCode());
-                }
+                // init soundboard
+                soundboard = new Soundboard();
 
+                // init channels with bpm
+                channels = new List<Channel>();
+                channels.Add(new Channel(bpm, "samples/kick.wav"));
+                channels.Add(new Channel(bpm, "samples/snare.wav"));
+                channels.Add(new Channel(bpm, "samples/hihat.wav"));
+                channels.Add(new Channel(bpm, "samples/bass.wav"));
+
+                foreach(Channel c in channels)
+                {
+                    c.Play();
+                }              
             }
+            else
+            {
+                throw new System.SystemException("Could not load bass");
+            }
+
+
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // free soundboard samples
+            soundboard.Free();
 
-            // free the stream
-            Bass.BASS_StreamFree(stream);
-            // free BASS
+            // TODO: free channel samples
+
+            // free bass
             Bass.BASS_Free();
 
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // airhorn
+            soundboard.Play(SoundboardSample.Airhorn);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            // smoke weed everyday
+            soundboard.Play(SoundboardSample.SmokeWeedEveryday);
         }
 
         private void button3_Click(object sender, EventArgs e)
