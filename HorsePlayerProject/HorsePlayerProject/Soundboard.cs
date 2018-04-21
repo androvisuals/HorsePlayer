@@ -10,7 +10,8 @@ namespace HorsePlayerProject
     enum SoundboardSample
     {
         SmokeWeedEveryday,
-        Airhorn
+        Airhorn,
+        Horse
     }
 
     class Soundboard
@@ -22,6 +23,7 @@ namespace HorsePlayerProject
             samples = new int[32];
             AddSample(SoundboardSample.Airhorn, "samples/airhorn.wav");
             AddSample(SoundboardSample.SmokeWeedEveryday, "samples/smokeweedeveryday.wav");
+            AddSample(SoundboardSample.Horse, "samples/horse.wav");
         }
 
         public void Play(SoundboardSample sample)
