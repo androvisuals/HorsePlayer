@@ -11,88 +11,82 @@ namespace HorsePlayerProject
     class Channel
     {
         private float bpm;
-        private int track;
+        private int channel;
         private SYNCPROC sync;
         private Form1 form;
         private int length;
-        private bool hold;
-        private int channel;
+
+        Random random;
+
+        private int nr;
         private int measure;
 
         private int synchandle;
 
-        public Channel(int channel, string file, float bpm, int length, Form1 form)
+        public Channel(int nr, string file, float bpm, int length, Form1 form)
         {
             this.form = form;
             this.bpm = bpm;
-            this.channel = channel;
+            this.nr = nr;
             this.length = length;
-            this.hold = form.GetHold(channel);
+
             measure = 0;
+            random = new Random(Guid.NewGuid().GetHashCode());
 
             // GUI stuff
-            form.InitTrackbar(channel, length);
-            form.SetTrackbar(channel, 0);
+            form.InitTrackbar(nr, length);
+            form.SetTrackbar(nr, 0);
 
             // load track
-            track = Bass.BASS_StreamCreateFile(file, 0, 0, BASSFlag.BASS_DEFAULT);
-
-            long l = Bass.BASS_ChannelGetLength(track);
-            Console.WriteLine(l);
-            Console.WriteLine(BarsToByte(0));
-            Console.WriteLine(BarsToByte(1));
-            Console.WriteLine(BarsToByte(2));
-            Console.WriteLine(BarsToByte(3));
-            Console.WriteLine(BarsToByte(4));
-
-            if (track == 0)
+            channel = Bass.BASS_StreamCreateFile(file, 0, 0, BASSFlag.BASS_DEFAULT);
+            if (channel == 0)
             {
-                throw new System.ArgumentException("Error: " + track + " Can not load sample", file);
+                throw new System.ArgumentException("Error: " + channel + " Can not load sample", file);
             }
 
             // init sync point for callback
             sync = new SYNCPROC(LoopEnd);
-            synchandle = Bass.BASS_ChannelSetSync(track, BASSSync.BASS_SYNC_POS | BASSSync.BASS_SYNC_MIXTIME, BarsToByte(1), sync, IntPtr.Zero);
+            synchandle = Bass.BASS_ChannelSetSync(channel, BASSSync.BASS_SYNC_POS | BASSSync.BASS_SYNC_MIXTIME, MeasuresToBytes(1), sync, IntPtr.Zero);
         }
 
         public void Play()
         {
-            Bass.BASS_ChannelPlay(track, false);
+            Bass.BASS_ChannelPlay(channel, false);
         }
 
+        // callback that handles end of measure
         private void LoopEnd(int handle, int c, int data, IntPtr user)
         {
             // switch to random measure if not on hold
-            if (!form.GetHold(channel))
+            if (!form.GetHold(nr))
             {
-                Random r = new Random(Guid.NewGuid().GetHashCode()); // add some more randomness
-                measure = r.Next(0, length + 1);
-                form.SetTrackbar(channel, measure);
+                measure = random.Next(0, length + 1);
+                form.SetTrackbar(nr, measure);
+
+                // set end pos callback
+                Bass.BASS_ChannelRemoveSync(channel, synchandle);
+                synchandle = Bass.BASS_ChannelSetSync(channel, BASSSync.BASS_SYNC_POS | BASSSync.BASS_SYNC_MIXTIME, MeasuresToBytes(measure + 1), sync, IntPtr.Zero);
             }
 
-            // set start point
-            Bass.BASS_ChannelSetPosition(track, BarsToByte(measure), BASSMode.BASS_POS_BYTE);
+            // move to start point
+            Bass.BASS_ChannelSetPosition(channel, MeasuresToBytes(measure), BASSMode.BASS_POS_BYTE);
 
-            // set end pos callback
-            Bass.BASS_ChannelRemoveSync(track, synchandle);
-            synchandle = Bass.BASS_ChannelSetSync(track, BASSSync.BASS_SYNC_POS | BASSSync.BASS_SYNC_MIXTIME, BarsToByte(measure + 1), sync, IntPtr.Zero);
-
-            Console.WriteLine("Channel: " + channel + " Measure: " + measure);
+            //Console.WriteLine("Channel: " + channel + " Measure: " + measure);
         }
 
-        public float BarsToSeconds(int bar)
+        public float MeasuresToSeconds(int measure)
         {
-            return (float)bar * 4.0f / bpm * 60.0f;
+            return measure * 4.0f / bpm * 60.0f;
         }
 
-        public long BarsToByte(int bar)
+        public long MeasuresToBytes(int measure)
         {
-            return Bass.BASS_ChannelSeconds2Bytes(track, BarsToSeconds(bar));
+            return Bass.BASS_ChannelSeconds2Bytes(channel, MeasuresToSeconds(measure));
         }
 
         public void Free()
         {
-            Bass.BASS_StreamFree(track);
+            Bass.BASS_StreamFree(channel);
         }
     }
 }

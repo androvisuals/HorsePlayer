@@ -52,6 +52,9 @@
             this.checkBox10 = new System.Windows.Forms.CheckBox();
             this.checkBox11 = new System.Windows.Forms.CheckBox();
             this.checkBox12 = new System.Windows.Forms.CheckBox();
+            this.xy1 = new HorsePlayerProject.Xy();
+            this.xy2 = new HorsePlayerProject.Xy();
+            this.xy3 = new HorsePlayerProject.Xy();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).BeginInit();
@@ -94,7 +97,7 @@
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(101, 63);
             this.button4.TabIndex = 3;
-            this.button4.Text = "button4";
+            this.button4.Text = "Toeter";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
@@ -104,7 +107,7 @@
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(101, 63);
             this.button5.TabIndex = 4;
-            this.button5.Text = "button5";
+            this.button5.Text = "Godverdomme";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
@@ -286,11 +289,38 @@
             this.checkBox12.Text = "checkBox12";
             this.checkBox12.UseVisualStyleBackColor = true;
             // 
+            // xy1
+            // 
+            this.xy1.BackColor = System.Drawing.SystemColors.WindowFrame;
+            this.xy1.Location = new System.Drawing.Point(33, 227);
+            this.xy1.Name = "xy1";
+            this.xy1.Size = new System.Drawing.Size(217, 178);
+            this.xy1.TabIndex = 24;
+            // 
+            // xy2
+            // 
+            this.xy2.BackColor = System.Drawing.SystemColors.WindowFrame;
+            this.xy2.Location = new System.Drawing.Point(277, 227);
+            this.xy2.Name = "xy2";
+            this.xy2.Size = new System.Drawing.Size(217, 178);
+            this.xy2.TabIndex = 25;
+            // 
+            // xy3
+            // 
+            this.xy3.BackColor = System.Drawing.SystemColors.WindowFrame;
+            this.xy3.Location = new System.Drawing.Point(526, 226);
+            this.xy3.Name = "xy3";
+            this.xy3.Size = new System.Drawing.Size(217, 178);
+            this.xy3.TabIndex = 26;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(876, 578);
+            this.Controls.Add(this.xy3);
+            this.Controls.Add(this.xy2);
+            this.Controls.Add(this.xy1);
             this.Controls.Add(this.checkBox12);
             this.Controls.Add(this.checkBox11);
             this.Controls.Add(this.checkBox10);
@@ -354,6 +384,9 @@
         private System.Windows.Forms.CheckBox checkBox10;
         private System.Windows.Forms.CheckBox checkBox11;
         private System.Windows.Forms.CheckBox checkBox12;
+        private Xy xy1;
+        private Xy xy2;
+        private Xy xy3;
     }
 }
 

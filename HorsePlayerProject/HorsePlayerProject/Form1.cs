@@ -14,13 +14,99 @@ namespace HorsePlayerProject
     public partial class Form1 : Form
     {
         float bpm = 90.0f;
-        Soundboard soundboard;
         List<Channel> channels;
+        List<Effect> effects;
 
         public Form1()
         {
             InitializeComponent();
-            
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            // init BASS using the default output device
+            if (Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
+            {
+                // init soundboard
+                effects = new List<Effect>();
+                effects.Add(new Effect("samples/airhorn.wav"));
+                effects.Add(new Effect("samples/smokeweedeveryday.wav"));
+                effects.Add(new Effect("samples/horse.wav"));
+                //effects.Add(new Effect("samples/horse.wav"));
+
+                // init channels with bpm
+                channels = new List<Channel>();
+                channels.Add(new Channel(1, "tracks/test.wav", bpm, 5, this));
+                channels.Add(new Channel(2, "tracks/kick.wav", bpm, 5, this));
+                channels.Add(new Channel(3, "tracks/snare.wav", bpm, 5, this));
+                channels.Add(new Channel(4, "tracks/hihat.wav", bpm, 5, this));
+                //channels.Add(new Channel("tracks/bass.wav", bpm, 4, trackBar1));
+
+                foreach(Channel c in channels)
+                {
+                    // maybe put these all in a mixer later if there are sync problems
+                    c.Play();
+                }              
+            }
+            else
+            {
+                throw new System.SystemException("Could not load bass");
+            }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            foreach (Channel c in channels)
+            {
+                c.Free();
+            }
+
+            foreach(Effect f in effects)
+            {
+                f.Free();
+            }
+
+            Bass.BASS_Free();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            effects[0].Play();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            effects[1].Play();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            effects[2].Play();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            effects[3].Play();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            effects[4].Play();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            effects[5].Play();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            effects[6].Play();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            effects[7].Play();
         }
 
         delegate void InitTrackbarCallback(int channel, int length);
@@ -59,7 +145,7 @@ namespace HorsePlayerProject
                 ctrl.Minimum = 0;
                 ctrl.Maximum = length;
             }
-            
+
         }
 
         delegate void SetTrackbarCallback(int channel, int measure);
@@ -88,7 +174,7 @@ namespace HorsePlayerProject
                     break;
             }
 
-            if(ctrl.InvokeRequired)
+            if (ctrl.InvokeRequired)
             {
                 SetTrackbarCallback d = new SetTrackbarCallback(SetTrackbar);
                 this.Invoke(d, new object[] { channel, measure });
@@ -135,90 +221,5 @@ namespace HorsePlayerProject
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            // init BASS using the default output device
-            if (Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, IntPtr.Zero))
-            {
-                // init soundboard
-                soundboard = new Soundboard();
-
-                // init channels with bpm
-                channels = new List<Channel>();
-                channels.Add(new Channel(1, "tracks/test.wav", bpm, 5, this));
-                channels.Add(new Channel(2, "tracks/kick.wav", bpm, 5, this));
-                channels.Add(new Channel(3, "tracks/snare.wav", bpm, 5, this));
-                channels.Add(new Channel(4, "tracks/hihat.wav", bpm, 5, this));
-                //channels.Add(new Channel("tracks/bass.wav", bpm, 4, trackBar1));
-
-                foreach(Channel c in channels)
-                {
-                    // maybe put these all in a mixer later if there are sync problems
-                    c.Play();
-                }              
-            }
-            else
-            {
-                throw new System.SystemException("Could not load bass");
-            }
-
-
-        }
-
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            // free soundboard samples
-            soundboard.Free();
-
-            // free channel samples
-            foreach (Channel c in channels)
-            {
-                c.Free();
-            }
-
-            // free bass
-            Bass.BASS_Free();
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            soundboard.Play(SoundboardSample.Airhorn);
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            soundboard.Play(SoundboardSample.SmokeWeedEveryday);
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            soundboard.Play(SoundboardSample.Horse);
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button8_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
